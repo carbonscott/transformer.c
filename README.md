@@ -10,6 +10,7 @@ A single-script distillation example of llm.c that focuses exclusively on the in
 - Feed-forward network with GELU activation
 - Residual connections
 - Support for different floating-point precisions (FP32, FP16, BF16)
+- Vision Transformer (ViT) implementation example
 
 ## Prerequisites
 
@@ -49,6 +50,13 @@ nvcc -o example_transformer example_transformer.cu transformer_block.cu -lcublas
 nvcc -o example_transformer example_transformer.cu transformer_block.cu -lcublas -lcublasLt -arch=compute_89 -code=sm_89
 ```
 
+### Compiling the Vision Transformer example
+
+```bash
+# Compile the Vision Transformer example
+nvcc -o example_vit example_vit.cu transformer_block.cu patch_processor.cu patch_encoder.cu -lcublas -lcublasLt -arch=compute_89 -code=sm_89
+```
+
 ## Usage
 
 The provided `example_transformer.cu` demonstrates how to use the transformer block implementation:
@@ -83,6 +91,15 @@ transformer_block_forward(&block, output, input, stream);
 // Free resources
 transformer_block_free(&block);
 ```
+
+### Vision Transformer Example
+
+The `example_vit.cu` demonstrates how to use the transformer for image processing:
+
+- Processes image data by extracting and normalizing patches
+- Embeds patches and adds positional embeddings
+- Passes the embedded patches through the transformer block
+- Demonstrates the application of transformers to vision tasks
 
 ## Implementation Details
 
