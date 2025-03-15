@@ -8,6 +8,7 @@
 #include <cuda_bf16.h>
 #include <stdio.h>
 #include <assert.h>
+#include "cuda_common.h"
 
 // Set default precision to BF16 if not specified
 #ifndef ENABLE_FP32
@@ -15,21 +16,6 @@
 #define ENABLE_BF16
 #endif
 #endif
-
-// Precision settings
-#if defined(ENABLE_FP32)
-typedef float floatX;
-#define CUBLAS_LOWP CUDA_R_32F
-#elif defined(ENABLE_FP16)
-typedef half floatX;
-#define CUBLAS_LOWP CUDA_R_16F
-#else // default to bfloat16
-typedef __nv_bfloat16 floatX;
-#define CUBLAS_LOWP CUDA_R_16BF
-#endif
-
-// CUDA error checking
-#define cudaCheck(err) { cudaError_t error = err; if (error != cudaSuccess) { printf("CUDA error: %s at line %d\n", cudaGetErrorString(error), __LINE__); exit(1); } }
 
 // WARP_SIZE is not a compile time constant, defining here
 #define WARP_SIZE 32U
